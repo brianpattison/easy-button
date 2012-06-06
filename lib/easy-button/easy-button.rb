@@ -77,7 +77,7 @@ class EasyButton < UIButton
     highlightRect = CGRectInset(outerRect, 2, 3)
     highlightPath = createRoundedRectForRect(highlightRect, 13)
     
-    # Draw shadow
+    # Draw Shadow When Not Pressed
     unless self.state == UIControlStateHighlighted
       CGContextSaveGState(context)
       CGContextSetFillColorWithColor(context, backgroundColorTop)
@@ -87,7 +87,7 @@ class EasyButton < UIButton
       CGContextRestoreGState(context)
     end
     
-    # Draw gradient for outer path
+    # Draw Button Gradient
     CGContextSaveGState(context)
     CGContextAddPath(context, outerPath)
     CGContextClip(context)
@@ -96,7 +96,7 @@ class EasyButton < UIButton
     
     CGContextRestoreGState(context)
     
-    # Draw highlight (if not selected)
+    # Draw Highlight or Inner Shadow
     unless self.state == UIControlStateHighlighted
       CGContextSaveGState(context)
       CGContextSetLineWidth(context, 4)
@@ -115,7 +115,7 @@ class EasyButton < UIButton
       CGContextRestoreGState(context)
     end
     
-    # Stroke outer path
+    # Draw Button Border
     CGContextSaveGState(context)
     CGContextSetLineWidth(context, 1)
     CGContextSetStrokeColorWithColor(context, UIColor.colorWithWhite(0, alpha:0.3).CGColor)
@@ -123,7 +123,7 @@ class EasyButton < UIButton
     CGContextStrokePath(context)
     CGContextRestoreGState(context)
     
-    # Move title label
+    # Move Title Label Down When Pressed
     if self.state == UIControlStateHighlighted
       titleLabel.transform = CGAffineTransformIdentity
       titleLabel.transform = CGAffineTransformMakeTranslation(0, 1)
