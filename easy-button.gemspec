@@ -1,5 +1,3 @@
-require File.expand_path('../lib/easy-button/version', __FILE__)
-
 Gem::Specification.new do |gem|
   gem.authors       = ["Brian Pattison"]
   gem.email         = ["brian@brianpattison.com"]
