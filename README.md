@@ -10,7 +10,7 @@ You can also more easily set the `font` and `title` for the button's label. Ever
 
 I find it very easy to use Bundler to manage gems in RubyMotion.
 
-`Rakefile`
+Rakefile
 
 ```ruby
 $:.unshift("/Library/RubyMotion/lib")
@@ -24,7 +24,7 @@ Motion::Project::App.setup do |app|
 end
 ```
 
-`Gemfile`
+Gemfile
 
 ```ruby
 source :rubygems
