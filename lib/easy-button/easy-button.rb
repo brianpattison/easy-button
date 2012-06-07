@@ -1,5 +1,5 @@
 class EasyButton < UIButton
-  attr_accessor :font, :title
+  attr_accessor :borderRadius, :font, :textColor, :title
   
   def initWithFrame(frame)
     if super
@@ -19,7 +19,9 @@ class EasyButton < UIButton
     self.opaque = false
     self.backgroundColor = UIColor.clearColor
     self.backgroundColor = "#ff0000"
+    self.borderRadius = 10
     self.font = UIFont.boldSystemFontOfSize(18)
+    self.textColor = '#fff'
     titleLabel.shadowColor = UIColor.colorWithWhite(0, alpha:0.5);
     titleLabel.shadowOffset = [0, -1]
   end
@@ -39,6 +41,21 @@ class EasyButton < UIButton
       @backgroundColorBottom = value
     end
     self.setNeedsDisplay
+  end
+  
+  def borderRadius=(value)
+    @borderRadius = value
+    self.setNeedsDisplay
+  end
+  
+  def textColor=(value)
+    @textColor = value
+    if value.is_a? String
+      red, green, blue = rgbFromHex(value)
+      titleLabel.textColor = UIColor.colorWithRed(red, green:green, blue:blue, alpha:1)
+    else
+      titleLabel.textColor = value
+    end
   end
   
   def font=(value)
@@ -63,11 +80,11 @@ class EasyButton < UIButton
     backgroundColorBottom = @backgroundColorBottom.CGColor
     
     outerMargin = 5
-    outerRect = CGRectInset(self.bounds, outerMargin, outerMargin)       
-    outerPath = createRoundedRectForRect(outerRect, 14)
+    outerRect = CGRectInset(self.bounds, outerMargin, outerMargin)
+    outerPath = createRoundedRectForRect(outerRect, @borderRadius)
     
     highlightRect = CGRectInset(outerRect, 2, 3)
-    highlightPath = createRoundedRectForRect(highlightRect, 13)
+    highlightPath = createRoundedRectForRect(highlightRect, @borderRadius - 1)
     
     # Draw Shadow When Not Pressed
     unless self.state == UIControlStateHighlighted
@@ -83,29 +100,25 @@ class EasyButton < UIButton
     CGContextSaveGState(context)
     CGContextAddPath(context, outerPath)
     CGContextClip(context)
-    
     drawLinearGradient(context, outerRect, backgroundColorTop, backgroundColorBottom)
-    
     CGContextRestoreGState(context)
     
     # Draw Highlight or Inner Shadow
-    unless self.state == UIControlStateHighlighted
-      CGContextSaveGState(context)
-      CGContextSetLineWidth(context, 4)
-      CGContextAddPath(context, outerPath)
-      CGContextAddPath(context, highlightPath)
-      CGContextEOClip(context)
-      drawLinearGradient(context, outerRect, UIColor.colorWithWhite(1, alpha:0.2).CGColor, UIColor.colorWithWhite(1, alpha:0.02).CGColor)
-      CGContextRestoreGState(context)
-    else
-      CGContextSaveGState(context)
+    CGContextSaveGState(context)
+    if self.state == UIControlStateHighlighted
       CGContextSetLineWidth(context, 4)
       CGContextAddPath(context, outerPath)
       CGContextAddPath(context, highlightPath)
       CGContextEOClip(context)
       drawLinearGradient(context, outerRect, UIColor.colorWithWhite(0, alpha:0.12).CGColor, UIColor.colorWithWhite(0, alpha:0.03).CGColor)
-      CGContextRestoreGState(context)
+    else
+      CGContextSetLineWidth(context, 4)
+      CGContextAddPath(context, outerPath)
+      CGContextAddPath(context, highlightPath)
+      CGContextEOClip(context)
+      drawLinearGradient(context, outerRect, UIColor.colorWithWhite(1, alpha:0.2).CGColor, UIColor.colorWithWhite(1, alpha:0.02).CGColor)
     end
+    CGContextRestoreGState(context)
     
     # Draw Button Border
     CGContextSaveGState(context)

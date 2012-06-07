@@ -4,7 +4,7 @@ A nice looking button in RubyMotion that extends the UIButton class and adds a c
 
 Just pass a single hex value to `backgroundColor` and get a nice gradient button with a shadow.
 
-You can also more easily set the `font` and `title` for the button's label. Everything else works just like a UIButton!
+You can also more easily set the `borderRadius`, `font`, `textColor`, and `title` for the button's label. Everything else works just like a UIButton!
 
 # Install
 
@@ -39,7 +39,9 @@ Run `bundle install`.
 ```ruby
 @button = EasyButton.alloc.initWithFrame([[10, 160], [300, 80]])
 @button.backgroundColor = '#ff0000'
+@button.borderRadius = 14
 @button.font = UIFont.boldSystemFontOfSize(26)
+@button.textColor = '#fff'
 @button.title = "That Was Easy!"
 ```
 
