@@ -26,15 +26,7 @@ class EasyButton < UIButton
   
   def backgroundColor=(value)
     if value.is_a? String
-      value = value.gsub(%r{[#;]}, '')
-      case value.size
-      when 3
-        rgb = value.scan(%r{[0-9A-Fa-f]}).map { |el| (1.0 * (el * 2).to_i(16)) / 255 }
-      when 6
-        rgb = value.scan(%r<[0-9A-Fa-f]{2}>).map { |el| (1.0 * el.to_i(16)) / 255 }
-      else
-        raise ArgumentError
-      end
+      rgb = rgbFromHex(value)
       @backGroundColorRed = rgb[0]
       @backGroundColorGreen = rgb[1]
       @backGroundColorBlue = rgb[2]
@@ -158,6 +150,18 @@ class EasyButton < UIButton
     CGPathAddArcToPoint(path, nil, CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetMaxX(rect), CGRectGetMinY(rect), radius)
     CGPathCloseSubpath(path)    
     path
+  end
+  
+  def rgbFromHex(hex)
+    hex = hex.gsub(%r{[#;]}, '')
+    case hex.size
+    when 3
+      hex.scan(%r{[0-9A-Fa-f]}).map { |el| (1.0 * (el * 2).to_i(16)) / 255 }
+    when 6
+      hex.scan(%r<[0-9A-Fa-f]{2}>).map { |el| (1.0 * el.to_i(16)) / 255 }
+    else
+      raise ArgumentError
+    end
   end
   
   def hesitateUpdate
