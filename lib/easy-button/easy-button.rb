@@ -173,7 +173,7 @@ class EasyButton < UIButton
     when 6
       hex.scan(%r<[0-9A-Fa-f]{2}>).map { |el| (1.0 * el.to_i(16)) / 255 }
     else
-      raise ArgumentError
+      raise ArgumentError, 'Argument is not a valid hex code.'
     end
   end
   
