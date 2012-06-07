@@ -29,7 +29,7 @@ Gemfile
 ```ruby
 source :rubygems
 
-gem 'easy-button', :git => 'git://github.com/brianpattison/easy-button.git'
+gem 'easy-button'
 ```
 
 Run `bundle install`.

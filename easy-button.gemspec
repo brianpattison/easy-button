@@ -3,7 +3,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["brian@brianpattison.com"]
   gem.description   = "A nice looking button in RubyMotion"
   gem.summary       = "Extends to UIButton class and adds properties for easy styling."
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/brianpattison/easy-button"
 
   gem.files         = `git ls-files`.split($\)
   gem.name          = "easy-button"
