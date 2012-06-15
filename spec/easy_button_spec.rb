@@ -3,10 +3,6 @@ describe EasyButton do
     @easyButton = EasyButton.alloc.initWithFrame([[0.0, 0.0], [10.0, 50.0]])
   end
 
-  it "backgroundColor should be transparent" do
-    @easyButton.backgroundColor.should.equal UIColor.clearColor
-  end
-  
   it "borderRadius should have a default value" do
     @easyButton.borderRadius.should.equal 10
   end
@@ -43,5 +39,9 @@ describe EasyButton do
     textColor = '#000'
     @easyButton.textColor = textColor
     @easyButton.titleLabel.textColor.should.equal UIColor.colorWithRed(0, green:0, blue:0, alpha:1)
+  end
+  
+  it "should raise an error for bad textColor hex code" do
+    lambda { @easyButton.textColor = '#ff00' }.should.raise(ArgumentError, 'Argument is not a valid hex code.')
   end
 end

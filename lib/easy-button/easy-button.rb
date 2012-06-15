@@ -1,5 +1,7 @@
 class EasyButton < UIButton
+  attr_writer :backgroundColor
   attr_accessor :borderRadius, :font, :textColor, :title
+  attr_reader :titleLabel
   
   def initWithFrame(frame)
     if super
@@ -16,14 +18,21 @@ class EasyButton < UIButton
   end
   
   def buttonSetup
+    # Custom Title Label
+    self.setTitleColor(UIColor.clearColor, forState:UIControlStateNormal)
+    @titleLabel = UILabel.alloc.initWithFrame(self.bounds)
+    @titleLabel.backgroundColor = UIColor.clearColor
+    @titleLabel.shadowColor = UIColor.colorWithWhite(0, alpha:0.5);
+    @titleLabel.shadowOffset = [0, -1]
+    @titleLabel.textAlignment = UITextAlignmentCenter
+    self.addSubview(@titleLabel)
+    
     self.opaque = false
     self.backgroundColor = UIColor.clearColor
     self.backgroundColor = "#ff0000"
     self.borderRadius = 10
     self.font = UIFont.boldSystemFontOfSize(18)
     self.textColor = '#fff'
-    titleLabel.shadowColor = UIColor.colorWithWhite(0, alpha:0.5);
-    titleLabel.shadowOffset = [0, -1]
   end
   
   def backgroundColor=(value)
@@ -41,31 +50,37 @@ class EasyButton < UIButton
       @backgroundColorBottom = value
     end
     self.setNeedsDisplay
+    self
   end
   
   def borderRadius=(value)
     @borderRadius = value
     self.setNeedsDisplay
+    self
+  end
+  
+  def font=(value)
+    @font = value
+    @titleLabel.setFont(@font)
+    self
   end
   
   def textColor=(value)
     @textColor = value
     if value.is_a? String
       red, green, blue = rgbFromHex(value)
-      titleLabel.textColor = UIColor.colorWithRed(red, green:green, blue:blue, alpha:1)
+      @titleLabel.textColor = UIColor.colorWithRed(red, green:green, blue:blue, alpha:1)
     else
-      titleLabel.textColor = value
+      @titleLabel.textColor = value
     end
-  end
-  
-  def font=(value)
-    @font = value
-    titleLabel.setFont(@font)
+    self
   end
   
   def title=(value)
     @title = value
-    self.setTitle(@title, forState:UIControlStateNormal)
+    @titleLabel.text = @title
+    self.setTitle(@title, forState:UIControlStateNormal) # For Accessibility
+    self
   end
   
   def drawRect(rect)
@@ -129,9 +144,9 @@ class EasyButton < UIButton
     CGContextRestoreGState(context)
     
     # Move Title Label Down When Pressed
+    @titleLabel.transform = CGAffineTransformIdentity
     if self.state == UIControlStateHighlighted
-      titleLabel.transform = CGAffineTransformIdentity
-      titleLabel.transform = CGAffineTransformMakeTranslation(0, 1)
+      @titleLabel.transform = CGAffineTransformMakeTranslation(0, 1)
     end
   end
   
