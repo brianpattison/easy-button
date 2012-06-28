@@ -8,9 +8,9 @@ You can also more easily set the `borderRadius`, `font`, `textColor`, and `title
 
 # Install
 
-I find it very easy to use Bundler to manage gems in RubyMotion.
+Use Bundler to manage gems in RubyMotion.
 
-Rakefile
+**Rakefile**
 
 ```ruby
 $:.unshift("/Library/RubyMotion/lib")
@@ -24,7 +24,7 @@ Motion::Project::App.setup do |app|
 end
 ```
 
-Gemfile
+**Gemfile**
 
 ```ruby
 source :rubygems
