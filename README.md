@@ -47,7 +47,7 @@ Run `bundle install`.
 
 # Screenshot
 
-![Easy Button Screenshot](http://www.brianpattison.com/images/easy-button.png)
+![Easy Button Screenshot](https://raw.github.com/brianpattison/easy-button/master/example.png)
 
 # Thanks
 
